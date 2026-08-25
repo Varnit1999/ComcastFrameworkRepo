@@ -42,6 +42,9 @@ public class HomePage extends WebDriverUtility {
 	@FindBy(linkText = "Products")
 	private WebElement productsLink;
 
+	@FindBy(linkText = "Invoice")
+	private WebElement invoiceLink;
+
 	@FindBy(xpath = "//img[contains(@src,'user')]")
 	private WebElement adminImg;
 
@@ -68,6 +71,10 @@ public class HomePage extends WebDriverUtility {
 
 	public WebElement getProductsLink() {
 		return productsLink;
+	}
+
+	public WebElement getInvoiceLink() {
+		return invoiceLink;
 	}
 
 	public void navigateToCampaignPage() {

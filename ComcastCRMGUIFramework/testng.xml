@@ -10,7 +10,6 @@
 			<class name="com.comcast.crm.orgtest.CreateOrganizationTest">
 				<methods>
 					<include name="createOrganizationTest" />
-					<include name="createVendorTest" />
 				</methods>
 			</class>
 		</classes>
