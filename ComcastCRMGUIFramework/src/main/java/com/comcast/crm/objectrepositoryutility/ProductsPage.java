@@ -15,7 +15,7 @@ public class ProductsPage {
 
 	@FindBy(xpath = "//img[@title='Create Product...']")
 	private WebElement createNewProductBtn;
-	
+
 	@FindBy(xpath = "//div[@id='basicsearchcolumns_real']//select[@id='bas_searchfield']")
 	private WebElement productDD;
 
@@ -26,9 +26,5 @@ public class ProductsPage {
 	public WebElement getProductDD() {
 		return productDD;
 	}
-	
-	
-	
-	
 
 }
