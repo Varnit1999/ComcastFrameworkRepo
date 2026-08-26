@@ -20,6 +20,9 @@ public class InvoicePage {
 	@FindBy(xpath = "//div[@id='basicsearchcolumns_real']//select[@name='search_field']")
 	private WebElement invoiceDD;
 
+	@FindBy(xpath = "//input[@name='search_text']")
+	private WebElement invoiceSearchEdt;
+
 	public WebElement getCreateInvoiceBtn() {
 		return createInvoiceBtn;
 	}
