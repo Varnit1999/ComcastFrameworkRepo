@@ -16,6 +16,9 @@ public class InvoicePage {
 	
 	@FindBy(xpath = "//img[@title='Create Invoice...']")
 	private WebElement createInvoiceBtn;
+	
+	@FindBy(xpath = "//div[@id='basicsearchcolumns_real']//select[@name='search_field']")
+	private WebElement invoiceDD;
 
 	public WebElement getCreateInvoiceBtn() {
 		return createInvoiceBtn;
