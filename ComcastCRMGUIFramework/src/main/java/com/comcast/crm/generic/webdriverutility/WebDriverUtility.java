@@ -62,7 +62,7 @@ public class WebDriverUtility {
 
 	public void switchToFrame(WebDriver driver, WebElement element) {
 		driver.switchTo().frame(element);
-	}
+	} 
 
 	public void switchToAlertAndAccept(WebDriver driver) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
