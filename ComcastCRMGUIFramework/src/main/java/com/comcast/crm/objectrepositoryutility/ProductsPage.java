@@ -15,16 +15,26 @@ public class ProductsPage {
 
 	@FindBy(xpath = "//img[@title='Create Product...']")
 	private WebElement createNewProductBtn;
+<<<<<<< HEAD
 
 	@FindBy(xpath = "//div[@id='basicsearchcolumns_real']//select[@id='bas_searchfield']")
 	private WebElement productDD;
+=======
+	
+	@FindBy(xpath = "//input[@class='txtBox']")
+	private WebElement searchEdt;
+>>>>>>> branch 'main' of https://github.com/Varnit1999/ComcastFrameworkRepo.git
 
 	public WebElement getCreateNewProductBtn() {
 		return createNewProductBtn;
 	}
 
-	public WebElement getProductDD() {
-		return productDD;
+	public WebElement getSearchEdt() {
+		return searchEdt;
 	}
+<<<<<<< HEAD
+=======
+	
+>>>>>>> branch 'main' of https://github.com/Varnit1999/ComcastFrameworkRepo.git
 
 }
