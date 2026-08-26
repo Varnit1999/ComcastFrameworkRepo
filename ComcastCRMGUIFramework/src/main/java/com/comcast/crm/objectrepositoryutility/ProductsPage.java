@@ -15,10 +15,19 @@ public class ProductsPage {
 
 	@FindBy(xpath = "//img[@title='Create Product...']")
 	private WebElement createNewProductBtn;
+	
+	@FindBy(xpath = "//input[@class='txtBox']")
+	private WebElement searchEdt;
 
 	public WebElement getCreateNewProductBtn() {
 		return createNewProductBtn;
 	}
+
+	public WebElement getSearchEdt() {
+		return searchEdt;
+	}
+	
+	
 	
 	
 
