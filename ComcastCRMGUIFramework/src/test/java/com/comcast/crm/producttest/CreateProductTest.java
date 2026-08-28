@@ -24,24 +24,24 @@ public class CreateProductTest extends BaseClass {
 
 		/* navigate to Products module */
 		UtilityClassObject.getTest().log(Status.INFO, "Navigate to Products Module");
-		HomePage hp = new HomePage(driver);
+		HomePage hp = new HomePage(getDriver());
 		hp.getProductsLink().click();
 
 		/* Click on "Create Product" Button" */
 		UtilityClassObject.getTest().log(Status.INFO, "Click on Create Product");
-		ProductsPage pp = new ProductsPage(driver);
+		ProductsPage pp = new ProductsPage(getDriver());
 		pp.getCreateNewProductBtn().click();
 
 		/* Enter all the details and create a new product */
 		UtilityClassObject.getTest().log(Status.INFO, "Enter all the details and create a new product");
-		CreateNewProductPage cnp = new CreateNewProductPage(driver);
+		CreateNewProductPage cnp = new CreateNewProductPage(getDriver());
 		cnp.getPrdNameEdt().sendKeys(productName);
 		cnp.getSaveBtn().click();
 
 		UtilityClassObject.getTest().log(Status.INFO, productName + " Product Created");
 
 		/* Verify Product Name Expected Result */
-		ProductInfoPage pip = new ProductInfoPage(driver);
+		ProductInfoPage pip = new ProductInfoPage(getDriver());
 		String actProdName = pip.getPrdName().getText().trim();
 		Assert.assertEquals(actProdName, productName);
 

@@ -102,7 +102,7 @@ public class HomePage extends WebDriverUtility {
 	public void logout() {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		wait.until(ExpectedConditions.elementToBeClickable(adminImg)).click();
-		wait.until(ExpectedConditions.visibilityOf(signOutLink));
+//		wait.until(ExpectedConditions.visibilityOf(signOutLink));
 		wait.until(ExpectedConditions.elementToBeClickable(signOutLink)).click();
 	}
 

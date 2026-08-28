@@ -30,23 +30,23 @@ public class CreateVendorTest extends BaseClass {
 
 		/* navigate to Vendors module */
 		UtilityClassObject.getTest().log(Status.INFO, "Navigate to Vendors Module");
-		HomePage hp = new HomePage(driver);
+		HomePage hp = new HomePage(getDriver());
 		hp.navigateToVendorsPage();
 
 		/* Click on "Create Vendor Button" */
 		UtilityClassObject.getTest().log(Status.INFO, "Click on Create Vendor");
-		VendorsPage vp = new VendorsPage(driver);
+		VendorsPage vp = new VendorsPage(getDriver());
 		vp.getCreateNewVendorBtn().click();
 
 		/* Enter all the details and create a new vendor */
 		UtilityClassObject.getTest().log(Status.INFO, "Enter all the details and create a new Vendor");
-		CreateNewVendorPage cnvp = new CreateNewVendorPage(driver);
+		CreateNewVendorPage cnvp = new CreateNewVendorPage(getDriver());
 		cnvp.createVendor(vendorName, glAccnt);
 
 		UtilityClassObject.getTest().log(Status.INFO, vendorName + " Vendor Created");
 
 		/* Verify Header Message Expected Result */
-		VendorInfoPage vip = new VendorInfoPage(driver);
+		VendorInfoPage vip = new VendorInfoPage(getDriver());
 		String actHeader = vip.getHeaderInfo().getText();
 		Assert.assertTrue(actHeader.contains(vendorName));
 
@@ -62,26 +62,26 @@ public class CreateVendorTest extends BaseClass {
 		String qty = elib.getDataFromExcel("product", 7, 6);
 
 		// Navigate to Vendors Module
-		HomePage hp = new HomePage(driver);
+		HomePage hp = new HomePage(getDriver());
 		hp.navigateToVendorsPage();
 
 		/* Click on "Create Vendor" button */
-		VendorsPage vp = new VendorsPage(driver);
+		VendorsPage vp = new VendorsPage(getDriver());
 		vp.getCreateNewVendorBtn().click();
 
 		/* Enter all the details and create a new vendor */
-		CreateNewVendorPage cnvp = new CreateNewVendorPage(driver);
+		CreateNewVendorPage cnvp = new CreateNewVendorPage(getDriver());
 		cnvp.createVendor(vdrName, glAccnt);
 
 		/* Navigate To Products Module */
 		hp.getProductsLink().click();
 
 		/* Click on "Create Product" button */
-		ProductsPage pp = new ProductsPage(driver);
+		ProductsPage pp = new ProductsPage(getDriver());
 		pp.getCreateNewProductBtn().click();
 
 		/* Enter all the details and create a new product */
-		CreateNewProductPage cnp = new CreateNewProductPage(driver);
+		CreateNewProductPage cnp = new CreateNewProductPage(getDriver());
 		cnp.getPrdNameEdt().sendKeys(pdtName);
 		cnp.getSaveBtn().click();
 
@@ -89,15 +89,15 @@ public class CreateVendorTest extends BaseClass {
 		hp.navigateToPurchaseOrderPage();
 
 		/* Click on "Create New Purchase Order" Button */
-		PurchaseOrdersPage pop = new PurchaseOrdersPage(driver);
+		PurchaseOrdersPage pop = new PurchaseOrdersPage(getDriver());
 		pop.getNewPurchaseOrderBtn().click();
 
 		/* Enter all the details and create a new purchase order */
-		CreateNewPurchaseOrderPage cpop = new CreateNewPurchaseOrderPage(driver);
+		CreateNewPurchaseOrderPage cpop = new CreateNewPurchaseOrderPage(getDriver());
 		cpop.createPurchaseOrderWithVendorAndProduct(sbjName, vdrName, billAddr, pdtName, qty);
-		
+
 		/* Verify Header Message Expected Result */
-		PurchaseOrderInfoPage pinp = new PurchaseOrderInfoPage(driver);
+		PurchaseOrderInfoPage pinp = new PurchaseOrderInfoPage(getDriver());
 		String actHeaderMsge = pinp.getHeaderInfo().getText();
 		Assert.assertTrue(actHeaderMsge.contains(sbjName));
 

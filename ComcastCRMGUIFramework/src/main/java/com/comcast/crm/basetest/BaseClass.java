@@ -9,9 +9,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 
 import com.comcast.crm.generic.databaseutility.DatabaseUtility;
@@ -28,8 +30,10 @@ public class BaseClass {
 	public FileUtitlity flib = new FileUtitlity();
 	public ExcelUtility elib = new ExcelUtility();
 	public JavaUtility jlib = new JavaUtility();
-	public WebDriver driver = null;
-	public static WebDriver sdriver = null;
+
+	public WebDriver getDriver() {
+		return UtilityClassObject.getDriver();
+	}
 
 	@BeforeSuite(groups = { "smokeTest", "regressionTest" })
 	public void configBS() throws SQLException {
@@ -38,8 +42,9 @@ public class BaseClass {
 	}
 
 //	@Parameters("BROWSER")
-//	@BeforeClass(groups = { "smokeTest", "regressionTest" })
+//	@BeforeTest(groups = { "smokeTest", "regressionTest" })
 //	public void configBC(String browser) throws Exception {
+//		WebDriver driver;
 //		System.out.println("===Launch the Browser===");
 ////		String BROWSER = flib.getDataFromPropertiesFile("browser");
 //		String BROWSER = browser;
@@ -52,10 +57,13 @@ public class BaseClass {
 //		} else {
 //			driver = new ChromeDriver();
 //		}
+//		UtilityClassObject.setDriver(driver);
+//		getDriver().manage().window().maximize();
 //	}
 
 	@BeforeClass(groups = { "smokeTest", "regressionTest" })
 	public void configBC() throws Exception {
+		WebDriver driver;
 		System.out.println("===Launch the Browser===");
 		String BROWSER = flib.getDataFromPropertiesFile("browser");
 		if (BROWSER.equals("chrome")) {
@@ -68,6 +76,7 @@ public class BaseClass {
 			driver = new ChromeDriver();
 		}
 		UtilityClassObject.setDriver(driver);
+		getDriver().manage().window().maximize();
 	}
 
 	@BeforeMethod(groups = { "smokeTest", "regressionTest" })
@@ -76,26 +85,34 @@ public class BaseClass {
 		String URL = flib.getDataFromPropertiesFile("url");
 		String USERNAME = flib.getDataFromPropertiesFile("username");
 		String PASSWORD = flib.getDataFromPropertiesFile("password");
-		LoginPage lp = new LoginPage(driver);
+		LoginPage lp = new LoginPage(getDriver());
 		lp.loginToApp(URL, USERNAME, PASSWORD);
 	}
 
 	@AfterMethod(groups = { "smokeTest", "regressionTest" })
 	public void configAM() {
 		System.out.println("=Logout=");
-		HomePage hp = new HomePage(driver);
+		HomePage hp = new HomePage(getDriver());
 		hp.logout();
 	}
+
+//	@AfterTest(groups = { "smokeTest", "regressionTest" })
+//	public void configAC() {
+//		System.out.println("==Close the Browser==");
+//		getDriver().quit();
+//		UtilityClassObject.removeDriver();
+//	}
 
 	@AfterClass(groups = { "smokeTest", "regressionTest" })
 	public void configAC() {
 		System.out.println("==Close the Browser==");
-		driver.quit();
+		getDriver().quit();
+		UtilityClassObject.removeDriver();
 	}
 
 	@AfterSuite(groups = { "smokeTest", "regressionTest" })
 	public void configAS() throws SQLException {
-	 	System.out.println("===close DB, Report Backup===");
+		System.out.println("===close DB, Report Backup===");
 		dblib.closeDbConnection();
 	}
 }

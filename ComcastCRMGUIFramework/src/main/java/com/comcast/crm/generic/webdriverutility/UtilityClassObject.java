@@ -24,5 +24,9 @@ public class UtilityClassObject {
 	public static void setDriver(WebDriver actDriver) {
 		driver.set(actDriver);
 	}
+	
+	public static void removeDriver() {
+	    driver.remove();
+	}
 
 }

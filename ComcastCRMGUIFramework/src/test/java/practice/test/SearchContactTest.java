@@ -18,10 +18,10 @@ public class SearchContactTest extends BaseClass {
 	 * Scenario : login() ==> navigatetoContact ==> createContact() ==> verify
 	 * 
 	 */
-	
+
 	@Test
 	public void searchContactTest() {
-		/*step-1 : login to app*/
-		LoginPage lp = new LoginPage(driver);
+		/* step-1 : login to app */
+		LoginPage lp = new LoginPage(getDriver());
 	}
 }

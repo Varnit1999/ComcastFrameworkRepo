@@ -18,13 +18,12 @@ import com.comcast.crm.generic.webdriverutility.UtilityClassObject;
 public class ListImpClass extends JavaUtility implements ITestListener, ISuiteListener {
 
 	public ExtentReports report;
-	public ExtentTest test;
+	public ExtentSparkReporter spark;
 
 	@Override
 	public void onStart(ISuite suite) {
 		System.out.println("Report Configuration");
-		ExtentSparkReporter spark = new ExtentSparkReporter(
-				"./AdvanceReport/report_" + getCurrentTimeStamp() + ".html");
+		spark = new ExtentSparkReporter("./AdvanceReport/report_" + getCurrentTimeStamp() + ".html");
 		spark.config().setDocumentTitle("CRM Test Suite Results");
 		spark.config().setReportName("CRM Report");
 		spark.config().setTheme(Theme.DARK);
@@ -39,9 +38,9 @@ public class ListImpClass extends JavaUtility implements ITestListener, ISuiteLi
 	@Override
 	public void onTestStart(ITestResult result) {
 		System.out.println("==== ====>" + result.getMethod().getMethodName() + "<====START====");
-		test = report.createTest(result.getMethod().getMethodName());
+		ExtentTest test = report.createTest(result.getMethod().getMethodName());
 		UtilityClassObject.setTest(test);
-		test.log(Status.INFO, result.getMethod().getMethodName() + "===> STARTED <===");
+		UtilityClassObject.getTest().log(Status.INFO, result.getMethod().getMethodName() + "===> STARTED <===");
 	}
 
 	@Override
@@ -54,7 +53,7 @@ public class ListImpClass extends JavaUtility implements ITestListener, ISuiteLi
 	@Override
 	public void onTestSuccess(ITestResult result) {
 		System.out.println("==== ====>" + result.getMethod().getMethodName() + "<====END====");
-		test.log(Status.PASS, result.getMethod().getMethodName() + "===> COMPLETED <===");
+		UtilityClassObject.getTest().log(Status.PASS, result.getMethod().getMethodName() + "===> COMPLETED <===");
 	}
 
 	@Override
@@ -64,8 +63,8 @@ public class ListImpClass extends JavaUtility implements ITestListener, ISuiteLi
 		String filePath = ts.getScreenshotAs(OutputType.BASE64);
 		String time = getCurrentTimeStamp();
 
-		test.addScreenCaptureFromBase64String(filePath, testName + "_" + time);
-		test.log(Status.FAIL, result.getMethod().getMethodName() + "===> FAILED <===");
+		UtilityClassObject.getTest().addScreenCaptureFromBase64String(filePath, testName + "_" + time);
+		UtilityClassObject.getTest().log(Status.FAIL, result.getMethod().getMethodName() + "===> FAILED <===");
 	}
 
 	@Override
@@ -73,6 +72,5 @@ public class ListImpClass extends JavaUtility implements ITestListener, ISuiteLi
 		// TODO Auto-generated method stub
 		ITestListener.super.onTestSkipped(result);
 	}
-	
 
 }

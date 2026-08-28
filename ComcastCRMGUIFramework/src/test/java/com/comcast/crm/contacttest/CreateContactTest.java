@@ -4,7 +4,9 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import com.aventstack.extentreports.Status;
 import com.comcast.crm.basetest.BaseClass;
+import com.comcast.crm.generic.webdriverutility.UtilityClassObject;
 import com.comcast.crm.objectrepositoryutility.ContactInfoPage;
 import com.comcast.crm.objectrepositoryutility.ContactsPage;
 import com.comcast.crm.objectrepositoryutility.CreateNewContactPage;
@@ -15,121 +17,140 @@ import com.comcast.crm.objectrepositoryutility.OrganizationsPage;
 
 public class CreateContactTest extends BaseClass {
 
-//	WebDriverUtility wlib = new WebDriverUtility();
-
 	@Test(groups = "smokeTest")
 	public void createContactTest() throws Throwable {
 
-		// read testScript data from Excel file utility
+		// Read test data from Excel file utility
+		UtilityClassObject.getTest().log(Status.INFO, "Read data from excel");
 		String lastName = elib.getDataFromExcel("contact", 1, 2) + jlib.getRandomNumber();
 
-		// step 2 : navigate to Contacts module
-		HomePage hp = new HomePage(driver);
+		System.out.println("Test data created: " + lastName);
+
+		// Step 2: Navigate to Contacts module
+		UtilityClassObject.getTest().log(Status.INFO, "Navigate to Contacts Module");
+		HomePage hp = new HomePage(getDriver());
 		hp.getContactLink().click();
 
-		// step 3 : click on "Create Contacts" Button
-		ContactsPage cp = new ContactsPage(driver);
+		// Step 3: Click on "Create Contacts" Button
+		UtilityClassObject.getTest().log(Status.INFO, "Click on Create Contact");
+		ContactsPage cp = new ContactsPage(getDriver());
 		cp.getCreateNewContactBtn().click();
 
-		// step 4 : enter all the details & create new Contact
-		CreateNewContactPage cnc = new CreateNewContactPage(driver);
+		// Step 4: Enter all the details & create new Contact
+
+		UtilityClassObject.getTest().log(Status.INFO, "Create a new contact with lastname");
+		CreateNewContactPage cnc = new CreateNewContactPage(getDriver());
 		cnc.createContact(lastName);
 
+		UtilityClassObject.getTest().log(Status.INFO, lastName + " Contact Created");
+
 		// Verify LastName info Expected Result
-		ContactInfoPage cip = new ContactInfoPage(driver);
+		ContactInfoPage cip = new ContactInfoPage(getDriver());
 
 		String actHeader = cip.getHeaderInfo().getText();
+
 		Assert.assertTrue(actHeader.contains(lastName));
 
 		String actLastName = cip.getLastName().getText();
+
 		SoftAssert soft = new SoftAssert();
 		soft.assertEquals(actLastName, lastName);
+		soft.assertAll();
+		UtilityClassObject.getTest().log(Status.INFO, actLastName + " is verified");
 
 	}
 
 	@Test(groups = "regressionTest")
 	public void createContactWithSupportDateTest() throws Throwable {
-		// read TestScript data from Excel file
+
+		UtilityClassObject.getTest().log(Status.INFO, "Read data from excel");
 		String lastName = elib.getDataFromExcel("contact", 4, 2) + jlib.getRandomNumber();
 
-		// step 2 : navigate to Contacts module
-		HomePage hp = new HomePage(driver);
+		UtilityClassObject.getTest().log(Status.INFO, "Navigate to Contacts Module");
+		HomePage hp = new HomePage(getDriver());
 		hp.getContactLink().click();
 
-		// step 3 : click on "Create Contacts" Button
-		ContactsPage cp = new ContactsPage(driver);
+		UtilityClassObject.getTest().log(Status.INFO, "Click on Create Contact");
+		ContactsPage cp = new ContactsPage(getDriver());
 		cp.getCreateNewContactBtn().click();
 
-		// step 4 : enter all the details & create new Contact
-		CreateNewContactPage cnp = new CreateNewContactPage(driver);
+		UtilityClassObject.getTest().log(Status.INFO,
+				"Create a new contact with support start date and support end date");
+		CreateNewContactPage cnp = new CreateNewContactPage(getDriver());
 
 		String startDate = jlib.getSystemDateYYYYDDMM();
 		String afterDateRequired = jlib.getRequiredDate(30);
 
 		cnp.createContactWithSupportDate(lastName, startDate, afterDateRequired);
 
-		// Verify start date and end date expected info
-		ContactInfoPage cip = new ContactInfoPage(driver);
+		ContactInfoPage cip = new ContactInfoPage(getDriver());
+
 		String st_date = cip.getStDate().getText().trim();
-		Assert.assertEquals(startDate, st_date);
+		Assert.assertEquals(st_date, startDate);
+		UtilityClassObject.getTest().log(Status.INFO, startDate + " support start date is verified");
 
 		String end_date = cip.getEndDate().getText().trim();
-		Assert.assertEquals(afterDateRequired, end_date);
+		Assert.assertEquals(end_date, afterDateRequired);
+		UtilityClassObject.getTest().log(Status.INFO, afterDateRequired + " support end date is verified");
+
 	}
 
 	@Test(groups = "regressionTest")
 	public void createContactWithOrgTest() throws Throwable {
+
+		UtilityClassObject.getTest().log(Status.INFO, "Read data from excel");
 		String orgName = elib.getDataFromExcel("contact", 7, 2) + jlib.getRandomNumber();
 		String contactLastName = elib.getDataFromExcel("contact", 7, 3) + jlib.getRandomNumber();
 
-		// step 2 : navigate to Organization module
-		HomePage hp = new HomePage(driver);
+		// Step 2: Navigate to Organization module
+		UtilityClassObject.getTest().log(Status.INFO, "Navigate to Organization Module");
+		HomePage hp = new HomePage(getDriver());
 		hp.getOrgLink().click();
 
-		// step 3 : click on "Create Organization" Button
-		OrganizationsPage onp = new OrganizationsPage(driver);
+		// Step 3: Click on "Create Organization" Button
+		UtilityClassObject.getTest().log(Status.INFO, "Click on Create Organization");
+		OrganizationsPage onp = new OrganizationsPage(getDriver());
 		onp.getCreateNewOrgBtn().click();
 
-		// step 4 : Enter all the details and create an Organization
-		CreatingNewOrganizationPage cnop = new CreatingNewOrganizationPage(driver);
+		// Step 4: Enter all the details and create an Organization
+		UtilityClassObject.getTest().log(Status.INFO, "Create a new Organization");
+		CreatingNewOrganizationPage cnop = new CreatingNewOrganizationPage(getDriver());
 		cnop.createOrg(orgName);
 
-		// verify Header message Expected Result
-		OrganizationInfoPage oip = new OrganizationInfoPage(driver);
-		String headerInfo = oip.getHeaderMsg().getText();
-		if (headerInfo.contains(orgName)) {
-			System.out.println(orgName + " is created==PASS");
-		} else {
-			System.out.println(orgName + " is not created==FAIL");
-		}
+		UtilityClassObject.getTest().log(Status.INFO, orgName + " Organization Created");
 
-		// step 5 : navigate to Contacts module
+		// Verify Header message
+		OrganizationInfoPage oip = new OrganizationInfoPage(getDriver());
+		String headerInfo = oip.getHeaderMsg().getText();
+		Assert.assertTrue(headerInfo.contains(orgName));
+
+		// Step 5: Navigate to Contacts module
+		UtilityClassObject.getTest().log(Status.INFO, "Navigate to Contacts Module");
 		hp.getContactLink().click();
 
-		// step 6 : click on "Create Contacts" Button
-		ContactsPage cp = new ContactsPage(driver);
+		// Step 6: Click on "Create Contacts" Button
+		UtilityClassObject.getTest().log(Status.INFO, "Click on Create Contact");
+		ContactsPage cp = new ContactsPage(getDriver());
 		cp.getCreateNewContactBtn().click();
 
-		// step 7 : enter all the details & create new Contact
-		CreateNewContactPage cnc = new CreateNewContactPage(driver);
+		// Step 7: Enter all the details and create new Contact
+		CreateNewContactPage cnc = new CreateNewContactPage(getDriver());
 		cnc.createContactWithOrg(contactLastName, orgName);
 
-		// Verify LastName info Expected Result
-		ContactInfoPage cip = new ContactInfoPage(driver);
-		headerInfo = cip.getHeaderInfo().getText();
-		if (headerInfo.contains(contactLastName)) {
-			System.out.println(contactLastName + " information is verified==PASS");
-		} else {
-			System.out.println(contactLastName + " information is not verified==FAIL");
-		}
+		UtilityClassObject.getTest().log(Status.INFO,
+				contactLastName + " contact is created with Orgnaization " + orgName);
 
-		// Verify orgName info Expected Result
+		// Verify LastName info
+		ContactInfoPage cip = new ContactInfoPage(getDriver());
+		headerInfo = cip.getHeaderInfo().getText();
+		Assert.assertTrue(headerInfo.contains(contactLastName));
+
+		UtilityClassObject.getTest().log(Status.INFO, contactLastName + " contact is verified");
+
+		// Verify Organization Name
 		String actOrgName = cip.getOrgName().getText().trim();
-		if (actOrgName.equals(orgName)) {
-			System.out.println(orgName + " information is verified==PASS");
-		} else {
-			System.out.println(orgName + " information is not verified==FAIL");
-		}
+		Assert.assertEquals(actOrgName, orgName);
+		UtilityClassObject.getTest().log(Status.INFO, orgName + " organization is verified");
 
 	}
 }
