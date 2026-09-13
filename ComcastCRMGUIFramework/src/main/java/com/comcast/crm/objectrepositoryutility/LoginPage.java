@@ -59,26 +59,15 @@ public class LoginPage extends WebDriverUtility {
 //	}
 	public void loginToApp(String url, String username, String password) {
 
-		System.out.println("1. Before driver.get()");
 		driver.get(url);
-
-		System.out.println("2. URL opened");
 
 		waitForPageToLoad(driver);
 
-		System.out.println("3. Implicit wait configured");
-
-		driver.manage().window().maximize();
-
-		System.out.println("4. Window maximized");
-
 		usernameEdt.sendKeys(username);
-		System.out.println("5. Username entered");
 
 		passwordEdt.sendKeys(password);
-		System.out.println("6. Password entered");
 
 		loginBtn.click();
-		System.out.println("7. Login button clicked");
+
 	}
 }
